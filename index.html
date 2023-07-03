@@ -30,6 +30,43 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <script src="https://cdn.emailjs.com/sdk/2.6.4/email.min.js"></script>
+    <script>
+        (function () {
+            emailjs.init('RJdU3GRJaaRscqEdn'); // Replace with your EmailJS user ID
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get form data
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var subject = document.getElementById('subject').value;
+            var message = document.getElementById('message').value;
+
+            // Compose the email parameters
+            var params = {
+                from_name: name,
+                from_email: email,
+                to_email: 'hundredup2023@gmail.com', // Replace with your email address
+                subject: subject,
+                message: message
+            };
+
+            // Send the email
+            emailjs.send('service_9o7bkap', 'template_athw63r', params)
+                .then(function (response) {
+                    console.log('SUCCESS!', 'response.status', 'response.text');
+                    alert('Message sent successfully!');
+                    document.getElementById('contactForm').reset(); // Reset the form
+                }, function (error) {
+                    console.log('FAILED...', error);
+                    alert('Failed to send the message. Please try again later.');
+                });
+        }
+    </script>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
@@ -498,7 +535,7 @@
                 </div>
                 <div class="col-lg-7 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                    <form action = "send_message.php" method="post">
+                    <form>
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -525,7 +562,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-primary py-3 px-5" type="submit">Send Message</button>
+                                <button class="btn btn-primary py-3 px-5" onclick="sendEmail(event)">Send Message</button>
                             </div>
                         </div>
                     </form>
